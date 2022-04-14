@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +39,19 @@ public class LoginPage {
 
 
     }
+    public void tryToLogin(String username, String password){
+        userNameInput.click();
+        userNameInput.sendKeys(username);
 
+        passwordInput.click();
+        passwordInput.sendKeys(password);
+
+        loginBtn.click();
+    }
+
+    public boolean isErrorMessageDisplayed(String errorMessage) {
+        WebElement errorLogin = driver.findElement(By.xpath("//*[text()='Epic sadface: "+errorMessage+"']"));
+        return errorLogin.isDisplayed();
+    }
 
 }

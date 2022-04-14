@@ -22,14 +22,7 @@ public class TestUtil {
     @BeforeMethod
     public void setUp() {
         setBrowserDriver();
-        loadurl();
-
-   }
-
-   private void loadurl() {
-        driver.get(url);
     }
-
 
 
     @AfterMethod
@@ -66,13 +59,16 @@ public class TestUtil {
 
     }
 
+    private void loadUrl(String url) {
+        driver.get(url);
+    }
 
 
     private void createChromeDriver(String url, int implicitWait) {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
-        loadurl();
+        loadUrl(url);
 
     }
 
@@ -80,9 +76,10 @@ public class TestUtil {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
-        loadurl();
+        loadUrl(url);
 
     }
+
 
 
 

@@ -2,6 +2,7 @@ package automation;
 
 import base.TestUtil;
 import com.opencsv.exceptions.CsvException;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -33,13 +34,23 @@ public class LoginTests extends TestUtil {
     public void UnsuccessfulLogin(String userName, String password) {
 
     LoginPage loginPage = new LoginPage(driver);
-    ProductsPage productPage = loginPage.login(userName, password);}
+    ProductsPage productPage = loginPage.login(userName, password);
+
+    String errorMessage = "Username and password do not match any user in this service";
+        if (userName.length() == 0) {
+            errorMessage = "Username is required";
+        } else if (password.length() == 0) {
+            errorMessage = "Password is required";
+        }
+
+        Assert.assertTrue(loginPage.isErrorMessageDisplayed(errorMessage));
+    }
 
     @Test(dataProvider = "csvUserList")
     public void SuccessfulLogin(String userName, String password) {
         LoginPage loginPage = new LoginPage(driver);
         ProductsPage productPage = loginPage.login(userName, password);
-
+        Assert.assertTrue(productPage.isHamburgerMenuDisplayed(), "This shall be visible after successful login.");
     }
 
 

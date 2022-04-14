@@ -9,13 +9,18 @@ import org.openqa.selenium.support.PageFactory;
 public class ProductsPage {
     protected WebDriver driver;
 
-    private static final String ADD_TO_CARD_LOCATOR = "//button[@id='add-to-chart-sauce-labs-%s']";
+    private static final String ADD_TO_CARD_LOCATOR = "//button[@id='add-to-cart-sauce-labs-%s']";
 
     @FindBy(className = "shopping_cart_link")
     private WebElement shoppingCartLink;
 
     @FindBy(className = "shopping_cart_badge")
     private WebElement shoppingCartCounter;
+
+
+
+
+
 
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
@@ -31,12 +36,19 @@ public class ProductsPage {
 
     }
 
-    public int getitmesInTheCart () {
 
-return Integer.parseInt(shoppingCartCounter.getText());
+
+    public int getItemsInTheCart(){
+        if(shoppingCartCounter.getText().isEmpty()){
+            return 0;
+        }else{
+            return Integer.parseInt(shoppingCartCounter.getText());
+        }
     }
 
-
+    public boolean isHamburgerMenuDisplayed() {
+        WebElement userAllPagesButton = driver.findElement(By.id("react-burger-menu-btn"));
+        return userAllPagesButton.isDisplayed();
+    }
 
 }
-
